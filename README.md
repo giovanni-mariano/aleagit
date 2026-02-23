@@ -102,7 +102,7 @@ make submodule-update
 
 ## How It Works
 
-Every geometry element gets a 64-bit FNV-1a fingerprint. Cells are hashed from their CSG tree structure, material, density, universe, fill, and lattice. Surfaces are hashed from their primitive type and coefficients. Two fingerprint sets are compared with a two-pointer merge on sorted element IDs, producing per-element added/removed/modified status with detailed change flags.
+Each cell and surface is fingerprinted for fast comparison. Scalar fields (material, density, universe, fill, boundary type) are compared directly. Variable-size structures — the CSG region tree and lattice fill arrays — are reduced to 64-bit FNV-1a hashes. Two fingerprint sets are compared with a two-pointer merge on sorted element IDs, producing per-element added/removed/modified status with detailed change flags.
 
 Visual diffs render both geometry versions on a 2D grid via libalea's slice API. When no axis is specified, 20 candidate positions are sampled per axis on a coarse 32x32 grid and the slice with the most differing pixels is selected. Surface contours are rasterized analytically from libalea's curve output.
 
