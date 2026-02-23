@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+//
+// SPDX-License-Identifier: MPL-2.0
+
 #define _GNU_SOURCE
 #include "geom_load.h"
 #include "git_helpers.h"

@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+#
+# SPDX-License-Identifier: MPL-2.0
+
+version = 1
+SPDX-PackageName = "aleagit"
+SPDX-PackageSupplier = "Giovanni MARIANO"
+SPDX-PackageDownloadLocation = "https://github.com/giovanni-mariano/aleagit"
+
+[[annotations]]
+path = ".gitignore"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Giovanni MARIANO"
+SPDX-License-Identifier = "MPL-2.0"
+
+[[annotations]]
+path = ".gitmodules"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Giovanni MARIANO"
+SPDX-License-Identifier = "MPL-2.0"
+
+[[annotations]]
+path = "README.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Giovanni MARIANO"
+SPDX-License-Identifier = "MPL-2.0"
+
+

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+//
+// SPDX-License-Identifier: MPL-2.0
+
 #define _POSIX_C_SOURCE 200809L
 #include "util.h"
 #include <stdlib.h>

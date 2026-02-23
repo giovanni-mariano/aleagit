@@ -1,4 +1,8 @@
 #!/bin/sh
+# SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+#
+# SPDX-License-Identifier: MPL-2.0
+
 # AleaGit pre-commit hook
 # Validates geometry files before allowing a commit.
 # Install with: aleagit init --hook

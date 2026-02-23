@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+//
+// SPDX-License-Identifier: MPL-2.0
+
 #include "git_helpers.h"
 #include "util.h"
 #include "aleagit.h"

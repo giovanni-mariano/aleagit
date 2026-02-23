@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+//
+// SPDX-License-Identifier: MPL-2.0
+
 #include "geom_fingerprint.h"
 #include "aleagit.h"
 #include <alea.h>

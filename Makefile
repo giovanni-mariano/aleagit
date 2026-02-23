@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+#
+# SPDX-License-Identifier: MPL-2.0
+
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -Iinclude
 

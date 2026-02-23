@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+//
+// SPDX-License-Identifier: MPL-2.0
+
 #define _USE_MATH_DEFINES
 #include "visual_diff.h"
 #include "bmp_writer.h"

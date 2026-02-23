@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Giovanni MARIANO
+//
+// SPDX-License-Identifier: MPL-2.0
+
 #ifndef ALEAGIT_GEOM_DIFF_H
 #define ALEAGIT_GEOM_DIFF_H
 
