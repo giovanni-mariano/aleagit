@@ -1,0 +1,185 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgit2-dev
+
+      - name: Build release
+        run: make RELEASE=1 PORTABLE=1
+
+      - name: Smoke test
+        run: ./aleagit --version
+
+      - name: Package
+        run: |
+          mkdir -p dist/aleagit-linux-x64
+          cp aleagit dist/aleagit-linux-x64/
+          cp README.md dist/aleagit-linux-x64/
+          cd dist && tar -czvf aleagit-linux-x64.tar.gz aleagit-linux-x64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aleagit-linux-x64
+          path: dist/aleagit-linux-x64.tar.gz
+
+  build-linux-arm64:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgit2-dev
+
+      - name: Build release
+        run: make RELEASE=1 PORTABLE=1
+
+      - name: Smoke test
+        run: ./aleagit --version
+
+      - name: Package
+        run: |
+          mkdir -p dist/aleagit-linux-arm64
+          cp aleagit dist/aleagit-linux-arm64/
+          cp README.md dist/aleagit-linux-arm64/
+          cd dist && tar -czvf aleagit-linux-arm64.tar.gz aleagit-linux-arm64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aleagit-linux-arm64
+          path: dist/aleagit-linux-arm64.tar.gz
+
+  build-macos-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: brew install libgit2 pkg-config
+
+      - name: Build release
+        run: make RELEASE=1 PORTABLE=1
+
+      - name: Smoke test
+        run: ./aleagit --version
+
+      - name: Package
+        run: |
+          mkdir -p dist/aleagit-macos-arm64
+          cp aleagit dist/aleagit-macos-arm64/
+          cp README.md dist/aleagit-macos-arm64/
+          cd dist && tar -czvf aleagit-macos-arm64.tar.gz aleagit-macos-arm64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aleagit-macos-arm64
+          path: dist/aleagit-macos-arm64.tar.gz
+
+  build-macos-x64:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: brew install libgit2 pkg-config
+
+      - name: Build release
+        run: make RELEASE=1 PORTABLE=1
+
+      - name: Smoke test
+        run: ./aleagit --version
+
+      - name: Package
+        run: |
+          mkdir -p dist/aleagit-macos-x64
+          cp aleagit dist/aleagit-macos-x64/
+          cp README.md dist/aleagit-macos-x64/
+          cd dist && tar -czvf aleagit-macos-x64.tar.gz aleagit-macos-x64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aleagit-macos-x64
+          path: dist/aleagit-macos-x64.tar.gz
+
+  build-windows-x64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-libgit2
+            mingw-w64-ucrt-x86_64-pkgconf
+            make
+            zip
+
+      - name: Build release
+        run: make RELEASE=1 PORTABLE=1
+
+      - name: Smoke test
+        run: ./aleagit --version
+
+      - name: Package
+        run: |
+          mkdir -p dist/aleagit-windows-x64
+          cp aleagit.exe dist/aleagit-windows-x64/ 2>/dev/null || cp aleagit dist/aleagit-windows-x64/aleagit.exe
+          cp README.md dist/aleagit-windows-x64/
+          cd dist && zip -r aleagit-windows-x64.zip aleagit-windows-x64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aleagit-windows-x64
+          path: dist/aleagit-windows-x64.zip
+
+  create-release:
+    needs: [build-linux-x64, build-linux-arm64, build-macos-arm64, build-macos-x64, build-windows-x64]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List artifacts
+        run: find artifacts -type f
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            artifacts/aleagit-linux-x64/aleagit-linux-x64.tar.gz
+            artifacts/aleagit-linux-arm64/aleagit-linux-arm64.tar.gz
+            artifacts/aleagit-macos-arm64/aleagit-macos-arm64.tar.gz
+            artifacts/aleagit-macos-x64/aleagit-macos-x64.tar.gz
+            artifacts/aleagit-windows-x64/aleagit-windows-x64.zip
