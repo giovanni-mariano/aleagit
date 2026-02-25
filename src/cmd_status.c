@@ -103,15 +103,15 @@ int cmd_status(int argc, char** argv) {
                         ag_color_printf(COL_DIM, "[");
                         if (diff->cells_added + diff->cells_removed + diff->cells_modified > 0) {
                             printf("cells: ");
-                            if (diff->cells_added)   ag_color_printf(COL_GREEN, "+%d ", diff->cells_added);
-                            if (diff->cells_removed)  ag_color_printf(COL_RED, "-%d ", diff->cells_removed);
-                            if (diff->cells_modified) ag_color_printf(COL_YELLOW, "~%d ", diff->cells_modified);
+                            if (diff->cells_added)   ag_color_printf(COL_GREEN, "%d added ", diff->cells_added);
+                            if (diff->cells_removed)  ag_color_printf(COL_RED, "%d removed ", diff->cells_removed);
+                            if (diff->cells_modified) ag_color_printf(COL_YELLOW, "%d modified ", diff->cells_modified);
                         }
                         if (diff->surfs_added + diff->surfs_removed + diff->surfs_modified > 0) {
                             printf("surfs: ");
-                            if (diff->surfs_added)   ag_color_printf(COL_GREEN, "+%d ", diff->surfs_added);
-                            if (diff->surfs_removed)  ag_color_printf(COL_RED, "-%d ", diff->surfs_removed);
-                            if (diff->surfs_modified) ag_color_printf(COL_YELLOW, "~%d ", diff->surfs_modified);
+                            if (diff->surfs_added)   ag_color_printf(COL_GREEN, "%d added ", diff->surfs_added);
+                            if (diff->surfs_removed)  ag_color_printf(COL_RED, "%d removed ", diff->surfs_removed);
+                            if (diff->surfs_modified) ag_color_printf(COL_YELLOW, "%d modified ", diff->surfs_modified);
                         }
                         ag_color_printf(COL_DIM, "]");
                         printf("\n");

@@ -123,7 +123,7 @@ static void format_diff_trailer(strbuf_t* sb,
                                 const char* path,
                                 const ag_diff_result_t* diff) {
     sb_appendf(sb, "Geometry-Change: %s\n", path);
-    sb_appendf(sb, "  cells: +%d -%d ~%d | surfaces: +%d -%d ~%d\n",
+    sb_appendf(sb, "  cells: %d added, %d removed, %d modified | surfaces: %d added, %d removed, %d modified\n",
                diff->cells_added, diff->cells_removed, diff->cells_modified,
                diff->surfs_added, diff->surfs_removed, diff->surfs_modified);
 
@@ -228,13 +228,13 @@ static void print_diff_summary(const char* path,
                                const ag_diff_result_t* diff) {
     printf("  %s: ", path);
     ag_color_printf(COL_DIM, "cells ");
-    ag_color_printf(COL_GREEN, "+%d ", diff->cells_added);
-    ag_color_printf(COL_RED, "-%d ", diff->cells_removed);
-    ag_color_printf(COL_YELLOW, "~%d", diff->cells_modified);
+    ag_color_printf(COL_GREEN, "%d added ", diff->cells_added);
+    ag_color_printf(COL_RED, "%d removed ", diff->cells_removed);
+    ag_color_printf(COL_YELLOW, "%d modified", diff->cells_modified);
     ag_color_printf(COL_DIM, " | surfaces ");
-    ag_color_printf(COL_GREEN, "+%d ", diff->surfs_added);
-    ag_color_printf(COL_RED, "-%d ", diff->surfs_removed);
-    ag_color_printf(COL_YELLOW, "~%d", diff->surfs_modified);
+    ag_color_printf(COL_GREEN, "%d added ", diff->surfs_added);
+    ag_color_printf(COL_RED, "%d removed ", diff->surfs_removed);
+    ag_color_printf(COL_YELLOW, "%d modified", diff->surfs_modified);
     printf("\n");
 
     /* Print up to 10 detail lines to console */

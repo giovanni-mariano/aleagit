@@ -38,7 +38,10 @@ int cmd_init(int argc, char** argv) {
     git_repository* repo = NULL;
     int err = git_repository_open_ext(&repo, ".", 0, NULL);
     if (err < 0) {
-        err = git_repository_init(&repo, ".", 0);
+        git_repository_init_options init_opts = GIT_REPOSITORY_INIT_OPTIONS_INIT;
+        init_opts.flags = GIT_REPOSITORY_INIT_MKPATH;
+        init_opts.initial_head = "main";
+        err = git_repository_init_ext(&repo, ".", &init_opts);
         if (err < 0) {
             ag_error("failed to initialize git repository");
             return 1;

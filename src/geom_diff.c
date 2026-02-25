@@ -226,18 +226,17 @@ void ag_diff_print(const ag_diff_result_t* result,
 
     /* Summary line */
     ag_color_printf(COL_BOLD, "Summary: ");
-    printf("%d cells changed ", result->cells_added + result->cells_removed + result->cells_modified);
-    printf("(");
-    ag_color_printf(COL_GREEN, "+%d", result->cells_added);
-    printf(" ");
-    ag_color_printf(COL_RED, "-%d", result->cells_removed);
-    printf(" ");
-    ag_color_printf(COL_YELLOW, "~%d", result->cells_modified);
+    printf("%d cells changed (", result->cells_added + result->cells_removed + result->cells_modified);
+    ag_color_printf(COL_GREEN, "%d added", result->cells_added);
+    printf(", ");
+    ag_color_printf(COL_RED, "%d removed", result->cells_removed);
+    printf(", ");
+    ag_color_printf(COL_YELLOW, "%d modified", result->cells_modified);
     printf("), %d surfaces changed (", result->surfs_added + result->surfs_removed + result->surfs_modified);
-    ag_color_printf(COL_GREEN, "+%d", result->surfs_added);
-    printf(" ");
-    ag_color_printf(COL_RED, "-%d", result->surfs_removed);
-    printf(" ");
-    ag_color_printf(COL_YELLOW, "~%d", result->surfs_modified);
+    ag_color_printf(COL_GREEN, "%d added", result->surfs_added);
+    printf(", ");
+    ag_color_printf(COL_RED, "%d removed", result->surfs_removed);
+    printf(", ");
+    ag_color_printf(COL_YELLOW, "%d modified", result->surfs_modified);
     printf(")\n");
 }
